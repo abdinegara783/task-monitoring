@@ -26,4 +26,10 @@ urlpatterns = [
     path('api/hello/', views.hello_world, name='hello_world'),
     path('api/info/', views.api_info, name='api_info'),
     path('api/test-post/', views.test_post, name='test_post'),
+    
+    # User Management endpoints - Contoh CRUD sederhana
+    path('api/users/', views.get_users, name='get_users'),                    # GET - Daftar semua user
+    path('api/users/create/', views.create_user, name='create_user'),         # POST - Buat user baru
+    path('api/users/<int:user_id>/', views.get_user_by_id, name='get_user'),  # GET - User berdasarkan ID
+    path('api/users/<int:user_id>/delete/', views.delete_user, name='delete_user'),  # DELETE - Hapus user
 ]
