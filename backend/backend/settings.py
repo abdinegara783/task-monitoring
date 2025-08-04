@@ -126,6 +126,9 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Custom User Model
+AUTH_USER_MODEL = 'backend.User'
+
 # CORS settings untuk komunikasi dengan React frontend
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React development server
