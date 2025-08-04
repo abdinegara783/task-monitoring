@@ -86,3 +86,29 @@ class UserSerializer(serializers.ModelSerializer):
             "shift",
             "is_on_leave",
         ]
+
+
+class LoginSerializer(serializers.Serializer):
+    employee_id = serializers.CharField()
+    password = serializers.CharField()
+    role = serializers.CharField()
+
+    def validate(self, data):
+        employee_id = data.get("employee")
+        password = data.get("password")
+        role = data.get("role")
+
+        if employee_id and password:
+            try:
+                user = User.objects.get(employee_id=employee_id, role=role)
+                if user.check_password(password):
+                    if not user.is_active:
+                        raise serializers.ValidationError("User account is disabled.")
+                    data["user"] = user
+                    return data
+                else:
+                    raise serializers.ValidationError("Invalid Credentials.")
+            except User.DoesNotExist:
+                raise serializers.ValidationError("Invalid Credentials.")
+        else:
+            raise serializers.ValidationError("Must include employee_id and Password")
